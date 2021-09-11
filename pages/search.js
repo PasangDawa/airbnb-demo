@@ -3,6 +3,7 @@ import Footer from '../components/Footer';
 import { useRouter } from 'next/dist/client/router';
 import { format } from 'date-fns';
 import InfoCard from '../components/InfoCard';
+import Map from '../components/Map';
 
 const Search = ({ searchResults }) => {
 	const router = useRouter();
@@ -11,10 +12,10 @@ const Search = ({ searchResults }) => {
 	const formattedEndDate = format(new Date(endDate), 'dd MMM yy');
 	const range = `${formattedStartDate} - ${formattedEndDate}`;
 	return (
-		<div className='h-screen'>
+		<div className='h-screen '>
 			<Header placeholder={`${location} | ${range} | ${noOfGuests} guests`} />
-			<main className='flex'>
-				<section className='flex-grow pt-14 px-6'>
+			<main className='flex max-w-5xl'>
+				<section className=' pt-14 px-6 '>
 					<p className='text-xs'>
 						300+ Stays - {range} - for {noOfGuests} number of guets
 					</p>
@@ -28,13 +29,17 @@ const Search = ({ searchResults }) => {
 						<p className='button'>Rooms and beds</p>
 						<p className='button'>More filters</p>
 					</div>
-					<div className='flex flex-col'>
+					<div className='flex flex-col '>
 						{searchResults.map((item) => (
-							<InfoCard key={item.img} searchResult={item} />
+							<InfoCard key={item.img} {...item} />
 						))}
 					</div>
 				</section>
+				<section className='hidden xl:inline-flex xl:min-w-[600px]'>
+					<Map searchResults={searchResults} />
+				</section>
 			</main>
+
 			<Footer />
 		</div>
 	);
